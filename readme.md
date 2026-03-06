@@ -47,3 +47,40 @@ curl -X POST http://localhost:31415/api/v42/auth/genesis \
   -H "X-Launch-Authorization: Bearer please-let-me-in-im-the-intern"
 
 # 6. Enjoy your todo list application that survives solar flares
+```
+**Tech Stack (because one buzzword list wasn't enough)**
+
+- Language → TypeScript / Java 17 / Go / Rust / whatever-was-trending-last-Tuesday
+- Framework → Spring Boot 3 + NestJS + Fiber + Actix + whatever-has-the-most-stars-this-month
+- Database → PostgreSQL + Redis + MongoDB + Cassandra + DynamoDB local + ClickHouse (just in case)
+- Message Broker → Kafka + RabbitMQ + NATS + Redis Streams + SQS (multi-cloud strategy)
+- Orchestration → Kubernetes (EKS because AWS good) + ArgoCD + Flux + Helm + Kustomize + plain kubectl apply ( Layers™ )
+- CI/CD → GitHub Actions + Jenkins + CircleCI + Tekton + Argo Workflows + drone + woodpecker (who knows which one still works)
+
+**Philosophy**
+
+"If it doesn't need 5 nines, 6 regions, blue-green-zero-downtime-canary-shadow traffic shifting and a cost of \$14k/month to run hello world - are we even trying?"
+
+- Every startup CTO after watching one YouTube video about system design interviews, 2024-2026
+
+**Contributing**
+
+- Fork
+- Add yet another layer of indirection
+- Increase cyclomatic complexity by at least 17
+- Open PR titled "feat: implement event-driven eventual consistency for the ping endpoint"
+- Wait 3 weeks for approval
+- Get told to add OpenTelemetry tracing first
+- Cry
+- Merge anyway because deadline
+
+**License**
+
+AGPL-3.0 because we hate joy
+
+Made with blood, sweat, Terraform, and existential dread in a 12-person "unicorn" that still uses Google Sheets for OKRs.
+
+text
+
+Feel free to copy-paste and watch junior candidates either run away screaming or fall in lo
+
