@@ -82,5 +82,5 @@ Made with blood, sweat, Terraform, and existential dread in a 12-person "unicorn
 
 text
 
-Feel free to copy-paste and watch junior candidates either run away screaming or fall in lo
+Feel free to copy-paste and watch junior candidates either run away screaming or fall in love with the chaos. 😈
 
