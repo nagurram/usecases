@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && powershell -Command \"Remove-Item -Recurse -Force ../wwwroot; New-Item -ItemType Directory -Force ../wwwroot; Copy-Item -Recurse dist/* ../wwwroot/\"",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },

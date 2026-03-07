@@ -11,6 +11,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Build .NET project
+      run: dotnet build ./ecommerce/web.app/web.app.csproj --configuration Release
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Build React app
+      run: |
+        cd ./ecommerce/web.app/clientapp
+        npm install
+        npm run build
+
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
