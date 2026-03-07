@@ -1,48 +1,25 @@
-using web.app.Services;
+using web.app.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// Register application services
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<ICartService, CartService>();
-
-// Add CORS for React BFF
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowReact", policy =>
-    {
-        policy.WithOrigins("http://localhost:3000", "http://localhost:5173")
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
-    });
-});
+builder.Services.AddApiDocumentation();
+builder.Services.AddApplicationServices();
+builder.Services.AddCorsConfiguration();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+// Configure the HTTP request pipeline
+app.UseApiDocumentation(app.Environment);
 app.UseHttpsRedirection();
-
 app.UseCors("AllowReact");
-
 app.UseAuthorization();
 
-app.MapControllers();
+// BFF: Serve React app from wwwroot with SPA routing
+app.UseBFFStaticFiles();
 
-// Health check endpoint
-app.MapGet("/api/health", () => new { status = "healthy", timestamp = DateTime.UtcNow })
-    .WithName("Health");
+// Map API and health endpoints
+app.MapApplicationEndpoints();
 
 app.Run();
