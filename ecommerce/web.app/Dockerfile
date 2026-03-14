@@ -15,7 +15,7 @@ RUN npm ci
 # Copy source code
 COPY clientapp/ .
 
-# Build React app (outputs to dist directory)
+# Build React app (outputs to ../wwwroot directory)
 RUN npm run build
 
 # ============================================================================
