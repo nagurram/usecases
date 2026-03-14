@@ -18,6 +18,8 @@ COPY clientapp/ .
 # Build React app (outputs to ../wwwroot directory)
 RUN npm run build
 
+RUN ls -la . ..
+
 # ============================================================================
 # Stage 2: Base ASP.NET Core runtime
 # ============================================================================
@@ -44,7 +46,7 @@ RUN dotnet restore "./web.app.csproj"
 COPY . .
 
 # Copy built React app from clientapp-build stage to wwwroot
-COPY --from=clientapp-build /src/clientapp/dist ./wwwroot
+COPY --from=clientapp-build /src/wwwroot ./wwwroot
 
 # Build .NET project
 WORKDIR "/src/."
