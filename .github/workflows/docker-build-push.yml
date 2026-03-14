@@ -16,6 +16,48 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
+    - name: Restore dependencies
+      run: |
+        dotnet restore ./ecommerce/web.app/web.app.csproj
+        dotnet restore ./ecommerce/web.app.Tests/web.app.Tests.csproj
+
+    - name: Run tests with coverage
+      run: dotnet test ./ecommerce/web.app.Tests/web.app.Tests.csproj --collect:"XPlat Code Coverage" --results-directory ./coverage
+
+    - name: Generate coverage report
+      run: |
+        dotnet tool install -g dotnet-reportgenerator-globaltool
+        reportgenerator -reports:./coverage/**/*.xml -targetdir:./coverage-report -reporttypes:Html
+
+    - name: Display coverage summary
+      run: |
+        echo "## Code Coverage Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        # Extract coverage percentage from the XML
+        COVERAGE=$(grep -oP '(?<=<coverage line-rate=")[^"]*' ./coverage/**/*.xml | head -1)
+        if [ -n "$COVERAGE" ]; then
+          COVERAGE_PERCENT=$(awk "BEGIN {printf \"%.2f\", $COVERAGE * 100}")
+          echo "Overall Line Coverage: **${COVERAGE_PERCENT}%**" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "Coverage data not found" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📊 [View detailed coverage report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) (download artifact: coverage-report)" >> $GITHUB_STEP_SUMMARY
+
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: ./coverage-report/
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        directory: ./coverage
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
     - name: Build .NET project
       run: dotnet build ./ecommerce/web.app/web.app.csproj --configuration Release
 
